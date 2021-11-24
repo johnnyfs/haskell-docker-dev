@@ -17,6 +17,8 @@ cd my-project
 docker run -it --volume ${PWD}:/src haskell-docker-dev:latest bash
 ```
 
+Or run directly from github
+
 Example: in the container, intialize a cabal project and start editing.
 
 ```bash
@@ -33,6 +35,30 @@ RUN cabal update
 RUN cabal install c2hs
 RUN cabal install microlens
 RUN cabal install microlens-th
+```
+
+Or extend it even further to create a multi-stage build based on the dev environment.
+
+```Dockerfile
+FROM haskell-docker-dev:latest AS dev
+
+RUN cabal update
+RUN cabal install bytestring data-hash microlens microlens-th mtl parsec
+
+FROM dev AS builder
+
+WORKDIR /opt/my-app
+COPY my-app.cabal .
+RUN cabal v1-install --only-dependencies -j
+ADD . .
+RUN cabal v1-install
+
+FROM alpine:3.14
+
+RUN apk add gmp-dev libffi-dev
+COPY --from=builder /opt/my-app/dist .
+
+CMD ./build/my-app/my-app
 ```
 
 Tested with windows powershell and docker desktop.

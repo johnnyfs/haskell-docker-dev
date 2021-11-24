@@ -32,14 +32,14 @@ COPY coc-settings.json /root/.vim/coc-settings.json
 # Set up ghc
 RUN apk add ghc musl-dev
 
-# Set up dev env
-COPY bashrc /root/.bashrc
-COPY vimrc /root/.vimrc
-
-# Install cabal and common tools
+# Install cabal and coc compatibility
 RUN apk add cabal
 RUN cabal update
 RUN cabal install implicit-hie
+
+# Set up dotfiles
+COPY bashrc /root/.bashrc
+COPY vimrc /root/.vimrc
 
 # Work area
 RUN mkdir -p /src
