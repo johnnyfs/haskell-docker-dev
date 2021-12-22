@@ -28,7 +28,7 @@ vim Main.hs
 
 ## Custom per-project derivatives
 
-Or extend by adding additional libraries and tools to enable a fast build for your specific project.
+Extend by creating a dependent docker file that adds additional libraries and tools to enable a fast build for your specific project.
 
 ```Dockerfile
 FROM haskell-docker-dev:latest
@@ -41,7 +41,7 @@ RUN cabal install microlens-th
 
 ## Multi-stage dev/build/prod
 
-Or extend it even further to create a multi-stage build based on the dev environment. (The runtime containers are usually only ~2MB.)
+Extend even further to create a multi-stage build based on the dev environment. (The runtime containers are usually only ~2MB.)
 
 ```Dockerfile
 FROM haskell-docker-dev:latest AS dev
@@ -82,13 +82,14 @@ In powershell, find your machines network IP by running:
 Get-NetIPAddress -AddressFamily IPv4
 ```
 
-Pass the display address to the docker container as an environment variable:
+Then pass the display address to the docker container as an environment variable:
 
+```
 Set-Variable -name DISPLAY -value $MY_IPADDRESS:0.0
 docker.exe run -it --volume ${PWD}:/src -e DISPLAY=$DISPLAY haskell-docker-dev bash
 ```
 
-Then run `gvim` from the command prompt. It should open in your windows environment.
+Inside the container, run `gvim` from the command prompt. It should open in your windows environment.
 
 (NOTE: the provided `.vimrc` includes the following settings to disable the menu and toolbar:
 
