@@ -6,8 +6,8 @@ RUN unset HTTP_PROXY && unset http_proxy && apk --update add bash mandoc man-pag
 # Add basic dev installers
 RUN apk add curl git
 
-# And a basic editor
-RUN apk add vim
+# Set up editors
+RUN apk add vim gvim font-jetbrains-mono-nerd
 
 # Install node
 RUN apk add nodejs npm
