@@ -1,12 +1,12 @@
 # haskell-docker-dev
 
-Builds a minimal haskell development environment based on apline linux and vim, using COC and haskell-language-server for flychecking and completion.
+A minimal(ish) haskell containerized dev environment based on apline linux and vim (or gvim), using COC and haskell-language-server for flychecking and completion.
 
 cabal is installed but not stack.
 
 ## Basic command line setup
 
-To use, just build and start an interactive session from the root of your project source.
+To use, just build and start an interactive session from your project root.
 
 In your command shell:
 
@@ -19,7 +19,7 @@ cd my-project
 docker run -it --volume ${PWD}:/src haskell-docker-dev:latest bash
 ```
 
-Example: in the container, intialize a cabal project and start editing.
+In the container, intialize a cabal project and start editing.
 
 ```bash
 cabal init -p my-project
